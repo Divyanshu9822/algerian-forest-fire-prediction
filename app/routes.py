@@ -24,9 +24,9 @@ def init_app(app):
                 else:
                     region = 1
 
-                with open("models/ridge_cv.pkl", "rb") as model_file:
+                with open("../models/ridge_cv.pkl", "rb") as model_file:
                     model = pickle.load(model_file)
-                with open("models/scaler.pkl", "rb") as scaler_file:
+                with open("../models/scaler.pkl", "rb") as scaler_file:
                     scaler = pickle.load(scaler_file)
 
                 input_data = scaler.transform(
