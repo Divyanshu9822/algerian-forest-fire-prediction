@@ -1,12 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Algerian Forest Fire Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
     <div class="container">
-        <h1>Hello, World!</h1>
+        <h2>Forest Fire Prediction Form</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="temperature">Temperature (noon, max in Celsius degrees):</label>
+                <input type="number" id="temperature" name="temperature" required />
+            </div>
+
+            <div class="form-group">
+                <label for="rh">Relative Humidity (%):</label>
+                <input type="number" id="rh" name="rh" required />
+            </div>
+
+            <div class="form-group">
+                <label for="ws">Wind Speed (km/h):</label>
+                <input type="number" id="ws" name="ws" required />
+            </div>
+
+            <div class="form-group">
+                <label for="rain">Rain (in mm):</label>
+                <input type="number" id="rain" name="rain" required />
+            </div>
+
+            <div class="form-group">
+                <label for="ffmc">Fine Fuel Moisture Code (FFMC):</label>
+                <input type="number" id="ffmc" name="ffmc" required />
+            </div>
+
+            <div class="form-group">
+                <label for="dmc">Duff Moisture Code (DMC):</label>
+                <input type="number" id="dmc" name="dmc" required />
+            </div>
+
+            <div class="form-group">
+                <label for="isi">Initial Spread Index (ISI):</label>
+                <input type="number" id="isi" name="isi" required />
+            </div>
+
+            <div class="form-group">
+                <label for="region">Region:</label>
+                <select id="region" name="region" required>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Sidi Bel-abbes">Sidi Bel-abbes</option>
+                </select>
+            </div>
+            {% if prediction is not none %}
+            <div class="result">
+                <h3>Prediction for Fire Weather Index (FWI): {{ prediction }}</h3>
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <input type="submit" value="Predict" />
+            </div>
+
+        </form>
     </div>
 </body>
 </html>
