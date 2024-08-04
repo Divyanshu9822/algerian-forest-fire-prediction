@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import pickle
 from config import Config
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -26,10 +27,19 @@ def index():
             else:
                 region = 1
 
-            with open("models/ridge_cv.pkl", "rb") as model_file:
-                model = pickle.load(model_file)
-            with open("models/scaler.pkl", "rb") as scaler_file:
-                scaler = pickle.load(scaler_file)
+
+            model_path = os.path.join(os.path.dirname(__file__), "models/ridge_cv.pkl")
+            scaler_path = os.path.join(os.path.dirname(__file__), "models/scaler.pkl")
+            try:
+                with open(model_path, "rb") as model_file:
+                    model = pickle.load(model_file)
+                with open(scaler_path, "rb") as scaler_file:
+                    scaler = pickle.load(scaler_file)
+            except Exception as e:
+                print(f"Error loading models: {e}")
+                return render_template(
+                    "index.html", prediction="Error: Unable to load models."
+                )
 
             input_data = scaler.transform(
                 [[temperature, rh, ws, rain, ffmc, dmc, isi, region]]
